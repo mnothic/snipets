@@ -6,6 +6,8 @@
 # @Version: 0.2
 # @license: BSD
 # 
+# Get new LUN's in Vio Servers SAN environment and put them into the AIX Vio Client vscsi
+# 
 # getNewDisk.sh -s all -c -f lun_file -a
 # -g cfgmgr yes or not when -g is not present
 # -s all find disks HITACHI IBM y EMC
