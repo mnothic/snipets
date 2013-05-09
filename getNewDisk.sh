@@ -291,7 +291,6 @@ if [[ $lunfile !=  '' ]]; then
 fi
 
 if [[ $label != '' ]] &&  [[ $start -gt 0  ]] && [[ $vhost != '' ]]; then
-	if 
 	mkvdevs $label $start $vhost
 fi
 
