@@ -269,7 +269,7 @@ if [[ $clean == 'yes' ]]; then
 fi
 
 if [[ $scan != '' ]]; then
-	if [ $cfg == 'yes' ]; then
+	if [[ $cfg == 'yes' ]]; then
 		cfgmgr  > /dev/null 2>&1
 	fi
 	if [[ $scan == "all" ]]; then
