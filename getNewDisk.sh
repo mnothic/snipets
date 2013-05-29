@@ -6,7 +6,7 @@
 # @Version: 0.2
 # @license: BSD
 # 
-# getNewDisk.sh -s all -c -f lun_file -a
+# getNewDisk.sh -s sym -g -c -f lun_file -a -m label_VTD -n X -v vhostX
 # -g cfgmgr yes or not when -g is not present
 # -s all find disks HITACHI IBM y EMC
 # -c clean Defined state disks
