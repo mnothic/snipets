@@ -213,7 +213,7 @@ second_check()
 
 usage()
 {
-	echo "$0  -s all -c -f {lun_file}"
+	echo "$0 -s sym -g -c -f file_wwn.txt -a -m label_VTD -n X -v vhostX"
 	exit 1
 }
 
