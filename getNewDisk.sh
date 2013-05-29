@@ -1,12 +1,10 @@
 #!/usr/bin/env ksh
 ###
-# @ScriptName: getNewDisk
+# @ScriptName: getNewDisk.sh
 # @Author: Jorge Medina
 # @Date: 05-03-2013
 # @Version: 0.2
 # @license: BSD
-# 
-# Get new LUN's in Vio Servers SAN environment and put them into the AIX Vio Client vscsi
 # 
 # getNewDisk.sh -s all -c -f lun_file -a
 # -g cfgmgr yes or not when -g is not present
@@ -14,7 +12,7 @@
 # -c clean Defined state disks
 # -f pases file with ID or WWN of
 # new disks the ID of the appliance works in case are a EMC
-# or HiTACHi, for other o al cases is better use a WNN List.
+# or HiTACHi, for other o all case is better use a WNN List.
 # -a change and set the HA attributes needed
 # -l make lsmap and parsed them to create a nice output 
 # needed to use with flags -m -n
@@ -178,7 +176,7 @@ mkvdevs()
 		fi
 	done
 	if [[ $input == 'y' ]]; then
-		if [ $vio2 != '' ]; then
+		if [[ $vio2 != '' ]]; then
 			outfile=$vio2
 		fi
 		for i in $(awk '{print $1}' $outfile)
@@ -191,7 +189,7 @@ mkvdevs()
 				zero=''
 			fi
 			vio mkvdev -vdev $i -vadapter $vhost -dev "${label}_${zero}${n}"
-			if [ $vio1 != '' ]; then
+			if [[ $vio1 != '' ]]; then
 				echo ${label}_${zero}${n} $(grep "$i " $outfile |awk '{print $3}') >> $vio1
 			fi
 			n=$(expr $n + 1)
@@ -219,7 +217,7 @@ usage()
 	exit 1
 }
 
-while getopts f:s:m:n:v:o:t:alc opt
+while getopts f:s:m:n:v:o:t:galc opt
 do
   case $opt in
 	f)
@@ -285,19 +283,20 @@ if [[ $scan != '' ]]; then
 	fi
 fi
 
+if [[ $devfile == 'yes' ]]; then
+	set_attr $outfile
+fi
+
 if [[ $lunfile !=  '' ]]; then
 	echo "Getting new luns..."
 	grep_luns $lunfile $outfile
 fi
 
 if [[ $label != '' ]] &&  [[ $start -gt 0  ]] && [[ $vhost != '' ]]; then
+	
 	mkvdevs $label $start $vhost
 fi
 
-if [[ $devfile == 'yes' ]]; then
-	set_attr $outfile
-fi
-
-if [ $vio2 != '' ]; then
+if [[ $vio2 != '' ]]; then
 	second_check $vio2
 fi
