@@ -6,7 +6,7 @@
 # @Version: 0.2
 # @license: BSD
 # 
-# getNewDisk.sh -s sym -g -c -f lun_file -a -m label_VTD -n X -v vhostX
+# getNewDisk.sh -s all -c -f lun_file -a
 # -g cfgmgr yes or not when -g is not present
 # -s all find disks HITACHI IBM y EMC
 # -c clean Defined state disks
@@ -151,6 +151,24 @@ grep_luns()
 		echo "Don't find target LUN's "
 		exit 0
 	fi
+	result=$(size_check $2)
+	echo $result |grep "^Error" > /dev/null
+	if [[ $? -eq 1 ]] ;then
+		echo $result
+		exit 0
+	fi
+}
+
+size_check()
+{
+	for hdisk in $(awk '{print $1}' $1)
+	do
+		hsize=$(bootinfo -s $hdisk|tr -d ' ')
+		if [[ $hsize -eq 0 ]];then
+			echo "Error size 0 in $hdisk"
+		fi
+	done
+	echo "OK"
 }
 
 ###
@@ -196,11 +214,11 @@ mkvdevs()
 
 usage()
 {
-	echo "$0 -s sym -g -c -f file_wwn.txt -a -m label_VTD -n X -v vhostX"
+	echo "$0  -s all -c -f {lun_file}"
 	exit 1
 }
 
-while getopts f:s:m:n:v:galc opt
+while getopts f:s:m:n:v:o:t:galc opt
 do
   case $opt in
 	f)
@@ -219,6 +237,10 @@ do
 		start="$OPTARG" ;;
 	v)
 		vhost="$OPTARG" ;;
+	o)
+		vio1="$OPTARG" ;;
+	t)
+		vio2="$OPTARG" ;;
 	g)
 		cfg='yes' ;;
 	*)
@@ -262,17 +284,16 @@ if [[ $scan != '' ]]; then
 	fi
 fi
 
-if [[ $devfile == 'yes' ]]; then
-	set_attr $outfile
-fi
-
 if [[ $lunfile !=  '' ]]; then
 	echo "Getting new luns..."
 	grep_luns $lunfile $outfile
+fi
+
+if [[ $devfile == 'yes' ]]; then
+	set_attr $outfile
 fi
 
 if [[ $label != '' ]] &&  [[ $start -gt 0  ]] && [[ $vhost != '' ]]; then
 	
 	mkvdevs $label $start $vhost
 fi
-
