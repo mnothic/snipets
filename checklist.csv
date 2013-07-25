@@ -1,0 +1,46 @@
+type;description;find pattern;file in config type case
+config;BONDING_OPTS mode;mode=4;/etc/sysconfig/network-scripts/ifcfg-bond0
+config;BONDING_OPTS xmit_hash_policy;xmit_hash_policy=layer3+4;/etc/sysconfig/network-scripts/ifcfg-bond0
+config;BONDING_OPTS miimon;miimon=80 ;/etc/sysconfig/network-scripts/ifcfg-bond0
+config;Bonding MTU;MTU=1500;/etc/sysconfig/network-scripts/ifcfg-bond0
+config;Satellite noSSLServerURL;noSSLServerURL=http://pwrneta1.intranet.gasnatural.com/XMLRPC;/etc/sysconfig/rhn/up2date 
+config;Satellite sslCACert;sslCACert=/usr/share/rhn/RHN-ORG-TRUSTED-SSL-CERT;/etc/sysconfig/rhn/up2date 
+config;Satellite serverURL;serverURL=https://pwrneta1.intranet.gasnatural.com/XMLRPC;/etc/sysconfig/rhn/up2date 
+process;OVO running;/opt/OV/bin/ovcd;
+file;Satellite Certificate;/usr/share/rhn/RHN-ORG-TRUSTED-SSL-CERT;
+config;backup user UID;backup:x:3333;/etc/passwd
+config;ctmagent user UID;ctmagent:x:2001;/etc/passwd
+config;Password policy PASS_MAX_DAYS;PASS_MAX_DAYS;/etc/login.defs
+config;Password policy PASS_MIN_DAYS;PASS_MIN_DAYS;/etc/login.defs
+config;Password policy PASS_MIN_LEN;PASS_MIN_LEN;/etc/login.defs
+config;Password policy PASS_WARN_AGE;PASS_WARN_AGE;/etc/login.defs
+config;account required pam_tally.so  reset;pam_tally.so reset;/etc/pam.d/system-auth
+config;password    requisite   retry=3 minlen=8 difok=3;pam_cracklib.so retry=3 minlen=8 difok=3;/etc/pam.d/system-auth
+config;password    requisite  try_first_pass;pam_cracklib.so try_first_pass retry=3 minlen=6 lcredit=1 ucredit=1 dcredit=1 ocredit=0;/etc/pam.d/system-auth
+config;resolv.conf domain;domain intranet.gasnatural.com;/etc/resolv.conf
+config;resolv.conf search;search intranet.gasnatural.com es.gasnatural.com;/etc/resolv.conf
+config;resolv.conf nameserver 1;nameserver 10.7.3.110;/etc/resolv.conf
+config;resolv.conf nameserver 2;nameserver 10.7.3.97;/etc/resolv.conf
+config;SSH PermitRootLogin;PermitRootLogin yes;/etc/ssh/sshd_config 
+config;SSH ClientAliveInterval;ClientAliveInterval 900;/etc/ssh/sshd_config 
+config;SSH ClientAliveCountMax;ClientAliveCountMax 0;/etc/ssh/sshd_config 
+config;sudoers rules backup /usr/bin/dsmc;backup ALL=NOPASSWD: /usr/bin/dsmc ;/etc/sudoers
+config;sudoers rules backup /usr/bin/dsmcad;backup ALL=NOPASSWD: /usr/bin/dsmcad ;/etc/sudoers
+config;sudoers rules backup /usr/bin/dsmj;backup ALL=NOPASSWD: /usr/bin/dsmj ;/etc/sudoers
+config;sudoers rules backup /usr/bin/dsmtca;backup ALL=NOPASSWD: /usr/bin/dsmtca ;/etc/sudoers
+config;sudoers rules backup /bin/chmod /opt/tivoli/tsm/client/ba/bin;backup ALL=NOPASSWD: /bin/chmod * /opt/tivoli/tsm/client/ba/bin*;/etc/sudoers
+config;sudoers rules backup /bin/chown /opt/tivoli/tsm/client/ba/bin;backup ALL=NOPASSWD: /bin/chown * /opt/tivoli/tsm/client/ba/bin*;/etc/sudoers
+config;sudoers rules backup /bin/chmod /home/gni/log/TSM;backup ALL=NOPASSWD: /bin/chmod * /home/gni/log/TSM*;/etc/sudoers
+config;sudoers rules backup /bin/chown /home/gni/log/TSM;backup ALL=NOPASSWD: /bin/chown * /home/gni/log/TSM*;/etc/sudoers
+config;sudoers rules backup /bin/chmod /home/gni/bin/TSM;backup ALL=NOPASSWD: /bin/chmod * /home/gni/bin/TSM*;/etc/sudoers
+config;sudoers rules backup /bin/chown /home/gni/bin/TSM;backup ALL=NOPASSWD: /bin/chown * /home/gni/bin/TSM*;/etc/sudoers
+config;sudoers rules backup /bin/chmod /home/gni/tsm.conf;backup ALL=NOPASSWD: /bin/chmod * /home/gni/tsm.conf*;/etc/sudoers
+config;sudoers rules backup /bin/chown /home/gni/tsm.conf;backup ALL=NOPASSWD: /bin/chown * /home/gni/tsm.conf*;/etc/sudoers
+config;sudoers rules backup /bin/chmod /opt/IBMadsm-c/script;backup ALL=NOPASSWD: /bin/chmod * /opt/IBMadsm-c/script*;/etc/sudoers
+config;sudoers rules backup /bin/chown /opt/IBMadsm-c/script;backup ALL=NOPASSWD: /bin/chown * /opt/IBMadsm-c/script* ;/etc/sudoers
+config;sudoers rules backup /bin/chmod /etc/adsm;backup ALL=NOPASSWD: /bin/chmod * /etc/adsm*;/etc/sudoers
+config;sudoers rules backup /bin/chown /etc/adsm;backup ALL=NOPASSWD: /bin/chown * /etc/adsm*;/etc/sudoers
+file;Config2HTML installed;/usr/bin/cfg2html;
+process;NTP daemon running;ntpd;
+config;NTP configuration server NTP_server;server NTP_server;/etc/ntp.conf
+config;NTP configuration restrict NTP_server;restrict NTP_server mask 255.255.255.255 nomodify notrap noquery;/etc/ntp.conf
