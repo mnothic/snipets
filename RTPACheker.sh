@@ -71,8 +71,10 @@ do
 	desc=$(echo $line | awk '{split($0, a, ";");print a[2]}')
 	pattern=$(echo $line | awk '{split($0, a, ";");print a[3]}')
 	file=$(echo $line | awk '{split($0, a, ";");print a[4]}')
+
 	case $type in
 		'config')
+			pattern="${pattern%"${pattern##*[![:space:]]}"}"
 			status=$(search "$pattern" "$file")
 			;;
 		'process')
