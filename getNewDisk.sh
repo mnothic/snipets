@@ -1,11 +1,12 @@
 #!/usr/bin/env ksh
-###
-# @ScriptName: getNewDisk.sh
-# @Author: Jorge Medina
-# @Date: 05-03-2013
-# @Version: 0.2
-# @license: BSD
-# 
+#: Title : getNewDisk.sh
+#: Date : 2013-03-05
+#: Author : "Jorge Medina" <jmedina@hp.com>
+#: Version : 0.3
+#: Description : AIX vio server vscsi provisioner
+#: license : BSD
+#: Options : getNewDisk.sh -s all -c -f lun_file -a
+#: NOTES:
 # getNewDisk.sh -s all -c -f lun_file -a
 # -g cfgmgr yes or not when -g is not present
 # -s all find disks HITACHI IBM y EMC
@@ -35,8 +36,6 @@ outfile=news.txt
 lunfile=''
 lsmap=''
 clean=''
-vio1=''
-vio2=''
 cfg=''
 outfilesorted=''
 ###
@@ -81,7 +80,7 @@ getIBMdisk()
 # information and saved into $vtdfile for future utilization.
 # @param void
 # @return $vtdfile
-#
+# add wwid column if don't see maybe need -s to generate wwwid file.
 lsmap()
 {
 	rm -rf $vtdfile
@@ -108,10 +107,14 @@ lsmap()
 		if [[ $? -eq 0 ]] ;then
 			device=$(echo $line|awk '{print $3}')
 		fi
+        wwid=$(grep "$device " $wwnfile |awk '{print $NF}')
 		echo $aux | grep Physloc > /dev/null
 		if [[ $? -eq 0 ]] ;then
-			physloc=$(echo $line|awk '{print $2}')
-			echo "$vtd $device $lun $vhostname $vscsi $status" >> $vtdfile
+            echo $device |grep hdisk > /dev/null
+            if [[ $? -eq 0 ]] ;then
+                physloc=$(echo $line|awk '{print $2}')
+                echo "$vtd $device $lun $vhostname $vscsi $status $wwid" >> $vtdfile
+            fi
 		fi		
 	done
 }
@@ -207,7 +210,7 @@ mkvdevs()
 			n=$(expr $n + 1)
 		done
 	else
-		echo "don't do anything..."
+		echo "don't do nothing..."
 		exit 1
 	fi
 }
@@ -237,10 +240,6 @@ do
 		start="$OPTARG" ;;
 	v)
 		vhost="$OPTARG" ;;
-	o)
-		vio1="$OPTARG" ;;
-	t)
-		vio2="$OPTARG" ;;
 	g)
 		cfg='yes' ;;
 	*)
