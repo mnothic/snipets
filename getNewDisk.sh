@@ -1,8 +1,8 @@
 #!/usr/bin/env ksh
 #: Title : getNewDisk.sh
-#: Date : 2013-03-05
+#: Date : 2013-10-23
 #: Author : "Jorge Medina" <jmedina@hp.com>
-#: Version : 0.3
+#: Version : 0.4
 #: Description : AIX vio server vscsi provisioner
 #: license : BSD
 #: Options : getNewDisk.sh -s all -c -f lun_file -a
