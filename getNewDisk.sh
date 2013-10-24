@@ -1,8 +1,8 @@
 #!/usr/bin/env ksh
 #: Title : getNewDisk.sh
-#: Date : 2013-10-23
+#: Date : 2013-10-24
 #: Author : "Jorge Medina" <jmedina@hp.com>
-#: Version : 0.4
+#: Version : 0.5
 #: Description : AIX vio server vscsi provisioner
 #: license : BSD
 #: Options : getNewDisk.sh -s all -c -f lun_file -a
@@ -25,7 +25,8 @@
 # save a log to undo changes in devices.
 # -t for check in the second vio server the result of the first
 # and -o to generate files on the first vio server
-# 
+# add get_hba_wwn() -w flag 2013-10-24
+#
 SEBINPATH=/usr/lpp/EMC/Symmetrix/bin
 BITS=$(getconf KERNEL_BITMODE)
 alias inq=$SEBINPATH/inq.aix${BITS}_51
@@ -70,7 +71,7 @@ getIBMdisk()
 	do
 		lscfg -vl $i |grep "Manufacturer" |grep "IBM" > /dev/null
 		if [[ $? -eq 0 ]] ; then
-			echo "$i   IBMID   $(lscfg -vl $i|grep "Serial Number.."|sed -e 's/\.//g'|sed -e 's/Serial Number//g'|tr -d ' ')"
+			echo "$i   IBMID   $(lscfg -vl $i|grep "Serial Number.."|sed -e 's/\.//g' -e 's/Serial Number//g'|tr -d ' ')"
 		fi
 	done
 }
@@ -215,13 +216,21 @@ mkvdevs()
 	fi
 }
 
+get_hba_wwn()
+{
+    for fc in $(lsdev |grep fcs |grep -v Defined|awk '{print $1}')
+    do
+        echo $fc $(lscfg -vl $fc |grep "Network Address"|sed -e "s/Network//" -e "s/Address//g" -e "s/\.//g")
+    done
+}
+
 usage()
 {
 	echo "$0  -s all -c -f {lun_file}"
 	exit 1
 }
 
-while getopts f:s:m:n:v:o:t:galc opt
+while getopts f:s:m:n:v:o:t:galcw opt
 do
   case $opt in
 	f)
@@ -242,13 +251,20 @@ do
 		vhost="$OPTARG" ;;
 	g)
 		cfg='yes' ;;
-	*)
+    w)
+		wwn='yes' ;;
+    *)
 		usage ;; 
    esac
 done
 
 if [[ $# -eq 0 ]]; then
 	usage
+fi
+
+if [[ $wwn == 'yes' ]]; then
+	get_hba_wwn
+    exit 0
 fi
 
 if [[ $lsmap == 'yes' ]]; then
