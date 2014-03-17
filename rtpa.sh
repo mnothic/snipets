@@ -10,7 +10,7 @@
 #: RTPA CHECKER
 #: works in AIX and LINUX
 #:
-BASEDIR='./'
+BASEDIR='.'
 . $BASEDIR/nshell.sh
 
 ##
