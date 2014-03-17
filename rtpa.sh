@@ -1,9 +1,9 @@
 #!/usr/bin/env [ba|k]sh
-#: Title : RTPA HP Checker
-#: Date : 2013-07-24
+#: Title : Release to Production Acceptance at Hewlett Packard
+#: Date : 2014-03-17
 #: Author : "Jorge Medina" <jmedina@hp.com>
 #: Version : 1.0
-#: Description : Check RTPA from chekcklist.csv
+#: Description : Check RTPA  from chekcklist.csv
 #: Options : ./rtpa.sh [ -h -f checklist.csv ]
 #: NOTES:
 #: install in $BASEDIR and download https://github.com/mnothic/nshell
