@@ -5,7 +5,16 @@
 #
 # chkconfig: 35 80 30
 # description: Oracle Database startup script
-
+# shutdown.sql
+#------CUT HERE-------
+#shutdown immediate;
+#exit
+#------END CUT-------
+# startup.sql
+#------CUT HERE------
+#startup;
+#exit;
+#------END CUT------
 # Source function librar
 . /etc/rc.d/init.d/functions
 
