@@ -36,8 +36,8 @@ if [[ $? -eq 0 ]]; then
     color_string green "compiling email translations..."
     . $APP_HOME/.ENV/bin/activate
     cd $APP_HOME/sast_dispatcher/apps/email
-    color_string green "compiling web translations..."
     pybabel compile -d translations
+    color_string green "compiling web translations..."
     cd $APP_HOME/sast_dispatcher/apps/web
     pybabel compile -d translations
 fi
@@ -50,24 +50,24 @@ if [[ $? -eq 0 ]]; then
         sudo supervisorctl stop all
         sleep 5
     done
-    color_string green "You want flush redis cache?"
+    color_string green "You can flush redis cache"
     continue_question
     if [[ $? -eq 0 ]]; then
         echo "flushdb" | redis-cli -h rabbitmq
     fi 
-    color_string green "You want exit without start application"
+    color_string green "Now you can exit without start application"
     continue_question
     if [[ $? -eq 0 ]]; then
        color_string red "$(timestamp) Exit with application stopped!!!!!WARNING"
     else
         color_string green "$(timestamp) starting gunicorns"
         sudo supervisorctl start all
-        color_string green "now you could flush nginx"
+        color_string green "Now you could flush nginx"
         continue_question
         if [[ $? -eq 0 ]]; then
             color_string green "$(timestamp) restarting nginx"
             sudo service nginx stop
-            sudo rm -rf /tmp/nginx/*
+            sudo rm -rf /tmp/nginx
             sudo service nginx start
         fi
     fi
