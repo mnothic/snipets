@@ -108,15 +108,15 @@ lsmap()
 		if [[ $? -eq 0 ]] ;then
 			device=$(echo $line|awk '{print $3}')
 		fi
-        wwid=$(grep "$device " $wwnfile |awk '{print $NF}')
+        	wwid=$(grep "$device " $wwnfile |awk '{print $NF}')
 		echo $aux | grep Physloc > /dev/null
 		if [[ $? -eq 0 ]] ;then
-            echo $device |grep hdisk > /dev/null
-            if [[ $? -eq 0 ]] ;then
-                physloc=$(echo $line|awk '{print $2}')
-                echo "$vtd $device $lun $vhostname $vscsi $status $wwid" >> $vtdfile
-            fi
-		fi		
+            	    echo $device |grep hdisk > /dev/null
+            	    if [[ $? -eq 0 ]] ;then
+                        physloc=$(echo $line|awk '{print $2}')
+                        echo "$vtd $device $lun $vhostname $vscsi $status $wwid" >> $vtdfile
+            	    fi
+	        fi		
 	done
 }
 
