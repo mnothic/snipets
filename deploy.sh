@@ -1,9 +1,9 @@
 #!/usr/bin/env zsh
 # author: Jorge A. Medina
-# coment: deploy passnfly 
+# comment: deploy passnfly 
 base_path=$(dirname $0)
 if [[ ! -d "$base_path/nshell" ]]; then
-    git clone https://github.com/mnothic/nshell.git
+    git clone https://github.com/engine-cl/nshell.git
 fi
 . $base_path/nshell/nshell.sh
 check_for_cli_args 1 $(color_string red "<release_version>") $@
